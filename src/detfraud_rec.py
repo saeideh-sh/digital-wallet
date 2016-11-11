@@ -63,6 +63,26 @@ def Verify(id1,id2,d,summary_payment,visited_ids):
 summary_payment = SummaryPayment(file_in)
 outFile = summary_payment.summary()
         
+with open(file_strm, 'r') as strm, open(file_out1,'w') as f_out1:
+    stream_reader = csv.DictReader(strm, delimiter= ',')
+    cnt_verify = 0
+    for stream in stream_reader:
+        if stream[' id1']  in outFile and stream[' id2'] in outFile :
+            fraud_status = Verify( stream[' id1'], stream[' id2'], 1, outFile,list())
+            if fraud_status == "trusted":
+                cnt_verify+=1
+            f_out1.write("%s\n" % fraud_status)
+    print(cnt_verify)
+with open(file_strm, 'r') as strm, open(file_out2,'w') as f_out2:
+    stream_reader = csv.DictReader(strm, delimiter= ',')
+    cnt_verify = 0
+    for stream in stream_reader:
+        if stream[' id1']  in outFile and stream[' id2'] in outFile :
+            fraud_status = Verify( stream[' id1'], stream[' id2'], 2, outFile,list())
+            if fraud_status == "trusted":
+                cnt_verify+=1
+            f_out2.write("%s\n" % fraud_status)
+    print(cnt_verify)
 with open(file_strm, 'r') as strm, open(file_out3,'w') as f_out3:
     stream_reader = csv.DictReader(strm, delimiter= ',')
     cnt_verify = 0
